@@ -174,7 +174,9 @@ public class RssListFragment extends BaseFragment
             default:
                 break;
         }
-        fetchDueToMenuOption();
+        if (result) {
+            fetchDueToMenuOption();
+        }
         return result ? result : super.onOptionsItemSelected(item);
     }
 }
