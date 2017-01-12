@@ -4,9 +4,11 @@ import com.example.undead.habrahabrrss.model.RssItem;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public interface DataSource {
-    List<RssItem> getTopDay();
-    List<RssItem> getTopWeek();
-    List<RssItem> getTopMonth();
-    List<RssItem> getTopAll();
+    Observable<List<RssItem>> getTopDay();
+    Observable<List<RssItem>> getTopWeek();
+    Observable<List<RssItem>> getTopMonth();
+    Observable<List<RssItem>> getTopAll();
 }

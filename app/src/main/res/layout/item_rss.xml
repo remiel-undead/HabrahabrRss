@@ -1,32 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/item_container"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/item_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp"
-        android:text="lkjljlk"
-        android:lines="1" />
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/item_date"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="8sp"
-        android:text="lkjljlkj"
-        android:lines="1" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/item_descr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lines="6"
-        android:text="lkjlkjlk"
-        android:ellipsize="end" />
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/item_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="16dp"/>
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/item_img"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="Title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_title"
+                android:layout_toRightOf="@+id/item_img"
+                android:lines="1"
+                android:text="Date"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="8sp"/>
+
+            <TextView
+                android:id="@+id/item_descr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_date"
+                android:layout_toRightOf="@+id/item_img"
+                android:ellipsize="end"
+                android:lines="6"
+                android:text="Description Description Description Description Description"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

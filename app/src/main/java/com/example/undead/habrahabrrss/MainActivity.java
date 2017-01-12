@@ -2,14 +2,15 @@ package com.example.undead.habrahabrrss;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.undead.habrahabrrss.fragment.RssItemFragment;
 import com.example.undead.habrahabrrss.fragment.RssListFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
+    private String mCurrentFragmentTag;
     private Fragment mFragment;
 
     @Override
@@ -17,15 +18,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager manager = getSupportFragmentManager();
-
-        if (manager.findFragmentByTag(RssListFragment.TAG) == null) {
-            FragmentTransaction ft = manager.beginTransaction();
-            mFragment = new RssListFragment();
-            ft.add(R.id.frame_container, mFragment, RssListFragment.TAG);
-            ft.commit();
+        if (savedInstanceState != null) {
+            mCurrentFragmentTag = savedInstanceState.getString(mCurrentFragmentTag, RssListFragment.TAG);
         } else {
+            mCurrentFragmentTag = RssListFragment.TAG;
+        }
+        FragmentManager manager = getSupportFragmentManager();
+        mFragment = manager.findFragmentByTag(mCurrentFragmentTag);
+        if (mFragment == null) {
+            mFragment = RssListFragment.newInstance();
+        }
+        manager.beginTransaction().replace(R.id.frame_container, mFragment).commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(CURRENT_FRAGMENT_TAG, mCurrentFragmentTag);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mFragment != null && mFragment.isVisible() && mCurrentFragmentTag.equals(RssItemFragment.TAG)) {
+            FragmentManager manager = getSupportFragmentManager();
             mFragment = manager.findFragmentByTag(RssListFragment.TAG);
+            if (mFragment == null) {
+                mFragment = RssListFragment.newInstance();
+            }
+            mCurrentFragmentTag = RssListFragment.TAG;
+            manager.beginTransaction().replace(R.id.frame_container, mFragment).commit();
+        } else {
+            super.onBackPressed();
         }
     }
 }

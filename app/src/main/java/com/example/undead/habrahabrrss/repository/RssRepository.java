@@ -4,27 +4,35 @@ import com.example.undead.habrahabrrss.model.RssItem;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public class RssRepository implements DataSource, WritableDataStorage {
     private CloudDataSource mCloudDataSource;
     private CacheDataSource mCacheDataSource;
 
+    public RssRepository() {
+        mCacheDataSource = new CacheDataSource();
+        mCloudDataSource = new CloudDataSource();
+    }
+
     @Override
-    public List<RssItem> getTopDay() {
+    public Observable<List<RssItem>> getTopDay() {
+        // TODO implement fetch from cache
+        return mCloudDataSource.getTopDay();
+    }
+
+    @Override
+    public Observable<List<RssItem>> getTopWeek() {
         return null;
     }
 
     @Override
-    public List<RssItem> getTopWeek() {
+    public Observable<List<RssItem>> getTopMonth() {
         return null;
     }
 
     @Override
-    public List<RssItem> getTopMonth() {
-        return null;
-    }
-
-    @Override
-    public List<RssItem> getTopAll() {
+    public Observable<List<RssItem>> getTopAll() {
         return null;
     }
 

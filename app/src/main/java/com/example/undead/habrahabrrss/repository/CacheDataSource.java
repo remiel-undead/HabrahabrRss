@@ -4,24 +4,26 @@ import com.example.undead.habrahabrrss.model.RssItem;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public class CacheDataSource implements DataSource, WritableDataStorage {
     @Override
-    public List<RssItem> getTopDay() {
+    public Observable<List<RssItem>> getTopDay() {
         return null;
     }
 
     @Override
-    public List<RssItem> getTopWeek() {
+    public Observable<List<RssItem>> getTopWeek() {
         return null;
     }
 
     @Override
-    public List<RssItem> getTopMonth() {
+    public Observable<List<RssItem>> getTopMonth() {
         return null;
     }
 
     @Override
-    public List<RssItem> getTopAll() {
+    public Observable<List<RssItem>> getTopAll() {
         return null;
     }
 
