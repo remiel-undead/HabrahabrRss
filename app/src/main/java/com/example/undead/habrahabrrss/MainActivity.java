@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements RssListFragment.O
             mFragment = RssListFragment.newInstance();
             manager.beginTransaction().replace(R.id.frame_container, mFragment, mCurrentFragmentTag).commit();
         } else {
-            mCurrentFragmentTag = savedInstanceState.getString(mCurrentFragmentTag, RssListFragment.TAG);
+            mCurrentFragmentTag = savedInstanceState.getString(CURRENT_FRAGMENT_TAG, RssListFragment.TAG);
             mFragment = manager.findFragmentByTag(mCurrentFragmentTag);
             if (mFragment == null) {
                 mFragment = RssListFragment.newInstance();
