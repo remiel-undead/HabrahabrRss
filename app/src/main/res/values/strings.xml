@@ -3,6 +3,8 @@
 
     <string name="sorry_empty">Sorry, it\'s empty yet.</string>
 
+    <string name="feed_options">Feed Options</string>
+
     <string name="top_per_day">Top for the day</string>
     <string name="top_per_week">For the week</string>
     <string name="top_per_month">For the month</string>

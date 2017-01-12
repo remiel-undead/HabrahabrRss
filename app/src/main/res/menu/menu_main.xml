@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/feed_options"
+          android:title="@string/feed_options"
+          app:showAsAction="never" >
+        <menu>
+            <item android:id="@+id/top_per_day"
+                  android:title="@string/top_per_day" />
+            <item android:id="@+id/top_per_week"
+                  android:title="@string/top_per_week" />
+            <item android:id="@+id/top_per_month"
+                  android:title="@string/top_per_month" />
+            <item android:id="@+id/top_all"
+                  android:title="@string/top_all" />
+        </menu>
+    </item>
+</menu>

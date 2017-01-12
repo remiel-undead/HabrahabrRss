@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,6 +27,16 @@ public class RssListFragment extends BaseFragment
         implements RssListView, RssListPresenterImpl.OnListItemClickListener {
 
     public final static String TAG = RssListFragment.class.getSimpleName();
+
+
+    private static final String TAG_OPTION = "option";
+    private final static int OPTION_DAY = 0;
+    private final static int OPTION_WEEK = 1;
+    private final static int OPTION_MONTH = 2;
+    private final static int OPTION_ALL = 3;
+
+    private int mCurrentOption;
+
     private List<RssItem> mItems;
     private RssListAdapter mAdapter;
     private RssListPresenter mRssListPresenter;
@@ -47,6 +60,7 @@ public class RssListFragment extends BaseFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        setHasOptionsMenu(true);
         mRssListPresenter = new RssListPresenterImpl(this, this, this);
     }
 
@@ -59,12 +73,35 @@ public class RssListFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        if (savedInstanceState == null) {
+            mCurrentOption = OPTION_DAY;
+        } else {
+            mCurrentOption = savedInstanceState.getInt(TAG_OPTION, 0);
+        }
         mItems = new ArrayList<>();
         mAdapter = new RssListAdapter(mItems, this);
 
-        // TODO fetch due to menu
-        mRssListPresenter.fetchTopDay();
+        fetchDueToMenuOption();
+    }
+
+    private void fetchDueToMenuOption() {
+        switch (mCurrentOption) {
+            case OPTION_DAY:
+                mRssListPresenter.fetchTopDay();
+                break;
+            case OPTION_WEEK:
+                // TODO mRssListPresenter.fetchTopWeek();
+                break;
+            case OPTION_MONTH:
+                // TODO mRssListPresenter.fetchTopMonth();
+                break;
+            case OPTION_ALL:
+                // TODO mRssListPresenter.fetchTopAll();
+                break;
+            default:
+                // TODO mRssListPresenter.fetchTopDay();
+                break;
+        }
     }
 
     @Override
@@ -82,5 +119,38 @@ public class RssListFragment extends BaseFragment
 
         mRecyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean result = false;
+        switch (item.getItemId()) {
+            case R.id.top_per_day:
+                mCurrentOption = OPTION_DAY;
+                result = true;
+                break;
+            case R.id.top_per_week:
+                mCurrentOption = OPTION_WEEK;
+                result = true;
+                break;
+            case R.id.top_per_month:
+                mCurrentOption = OPTION_MONTH;
+                result = true;
+                break;
+            case R.id.top_all:
+                mCurrentOption = OPTION_ALL;
+                result = true;
+                break;
+            default:
+                break;
+        }
+        fetchDueToMenuOption();
+        return result ? result : super.onOptionsItemSelected(item);
     }
 }

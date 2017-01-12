@@ -4,6 +4,8 @@
 
     <string name="sorry_empty">К сожалению, здесь пока пусто.</string>
 
+    <string name="feed_options">Настройки ленты</string>
+
     <string name="top_per_day">Лучшее за сутки</string>
     <string name="top_per_week">За неделю</string>
     <string name="top_per_month">За месяц</string>
