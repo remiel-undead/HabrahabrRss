@@ -23,17 +23,20 @@ public class RssRepository implements DataSource, WritableDataStorage {
 
     @Override
     public Observable<List<RssItem>> getTopWeek() {
-        return null;
+        // TODO implement fetch from cache
+        return mCloudDataSource.getTopWeek();
     }
 
     @Override
     public Observable<List<RssItem>> getTopMonth() {
-        return null;
+        // TODO implement fetch from cache
+        return mCloudDataSource.getTopMonth();
     }
 
     @Override
     public Observable<List<RssItem>> getTopAll() {
-        return null;
+        // TODO implement fetch from cache
+        return mCloudDataSource.getTopAll();
     }
 
     @Override

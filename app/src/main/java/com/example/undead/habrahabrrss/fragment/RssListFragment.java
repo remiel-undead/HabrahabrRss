@@ -90,16 +90,15 @@ public class RssListFragment extends BaseFragment
                 mRssListPresenter.fetchTopDay();
                 break;
             case OPTION_WEEK:
-                // TODO mRssListPresenter.fetchTopWeek();
+                mRssListPresenter.fetchTopWeek();
                 break;
             case OPTION_MONTH:
-                // TODO mRssListPresenter.fetchTopMonth();
+                mRssListPresenter.fetchTopMonth();
                 break;
             case OPTION_ALL:
-                // TODO mRssListPresenter.fetchTopAll();
+                mRssListPresenter.fetchTopAll();
                 break;
             default:
-                // TODO mRssListPresenter.fetchTopDay();
                 break;
         }
     }

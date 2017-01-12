@@ -33,6 +33,16 @@ public class CloudDataSource implements DataSource {
     public Observable<List<RssItem>> getTopDay() {
         return mApi
                 .getTopDay()
+                .flatMap(new Function<RssFeedResponse, Observable<? extends RssFeedResponse>>() {
+                    @Override
+                    public Observable<? extends RssFeedResponse> apply(RssFeedResponse rssFeedResponse) throws Exception {
+                        if (rssFeedResponse == null || rssFeedResponse.getChannel() == null) {
+                            return Observable.error(new Exception(DEFAULT_ERROR_MESSAGE));
+                        } else {
+                            return Observable.just(rssFeedResponse);
+                        }
+                    }
+                })
                 .map(new Function<RssFeedResponse, List<RssItem>>() {
                     @Override
                     public List<RssItem> apply(RssFeedResponse rssFeedResponse) throws Exception {
@@ -43,16 +53,66 @@ public class CloudDataSource implements DataSource {
 
     @Override
     public Observable<List<RssItem>> getTopWeek() {
-        return null;
+        return mApi.getTopWeek()
+                .flatMap(new Function<RssFeedResponse, Observable<? extends RssFeedResponse>>() {
+                    @Override
+                    public Observable<? extends RssFeedResponse> apply(RssFeedResponse rssFeedResponse) throws Exception {
+                        if (rssFeedResponse == null || rssFeedResponse.getChannel() == null) {
+                            return Observable.error(new Exception(DEFAULT_ERROR_MESSAGE));
+                        } else {
+                            return Observable.just(rssFeedResponse);
+                        }
+                    }
+                })
+                .map(new Function<RssFeedResponse, List<RssItem>>() {
+                    @Override
+                    public List<RssItem> apply(RssFeedResponse rssFeedResponse) throws Exception {
+                        return rssFeedResponse.getChannel().getItems();
+                    }
+                });
     }
 
     @Override
     public Observable<List<RssItem>> getTopMonth() {
-        return null;
+        return mApi
+                .getTopMonth()
+                .flatMap(new Function<RssFeedResponse, Observable<? extends RssFeedResponse>>() {
+                    @Override
+                    public Observable<? extends RssFeedResponse> apply(RssFeedResponse rssFeedResponse) throws Exception {
+                        if (rssFeedResponse == null || rssFeedResponse.getChannel() == null) {
+                            return Observable.error(new Exception(DEFAULT_ERROR_MESSAGE));
+                        } else {
+                            return Observable.just(rssFeedResponse);
+                        }
+                    }
+                })
+                .map(new Function<RssFeedResponse, List<RssItem>>() {
+                    @Override
+                    public List<RssItem> apply(RssFeedResponse rssFeedResponse) throws Exception {
+                        return rssFeedResponse.getChannel().getItems();
+                    }
+                });
     }
 
     @Override
     public Observable<List<RssItem>> getTopAll() {
-        return null;
+        return mApi
+                .getTopAll()
+                .flatMap(new Function<RssFeedResponse, Observable<? extends RssFeedResponse>>() {
+                    @Override
+                    public Observable<? extends RssFeedResponse> apply(RssFeedResponse rssFeedResponse) throws Exception {
+                        if (rssFeedResponse == null || rssFeedResponse.getChannel() == null) {
+                            return Observable.error(new Exception(DEFAULT_ERROR_MESSAGE));
+                        } else {
+                            return Observable.just(rssFeedResponse);
+                        }
+                    }
+                })
+                .map(new Function<RssFeedResponse, List<RssItem>>() {
+                    @Override
+                    public List<RssItem> apply(RssFeedResponse rssFeedResponse) throws Exception {
+                        return rssFeedResponse.getChannel().getItems();
+                    }
+                });
     }
 }
