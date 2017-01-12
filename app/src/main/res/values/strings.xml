@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">HabrahabrRss</string>
+
+    <string name="sorry_empty">Sorry, it\'s empty yet.</string>
+
+    <string name="top_per_day">Top for the day</string>
+    <string name="top_per_week">For the week</string>
+    <string name="top_per_month">For the month</string>
+    <string name="top_all">All the time</string>
 </resources>

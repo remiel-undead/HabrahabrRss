@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ХабраЛента</string>
+
+    <string name="sorry_empty">К сожалению, здесь пока пусто.</string>
+
+    <string name="top_per_day">Лучшее за сутки</string>
+    <string name="top_per_week">За неделю</string>
+    <string name="top_per_month">За месяц</string>
+    <string name="top_all">Всё время</string>
+</resources>
