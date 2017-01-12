@@ -17,10 +17,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RssListPresenterImpl implements RssListPresenter {
 
-    public interface OnListItemClickListener {
-        void onListItemClick(RssItem item);
-    }
-
     private class RssListDisposableObserver extends DisposableObserver<List<RssItem>> {
         @Override
         public void onNext(List<RssItem> rssItems) {
@@ -48,12 +44,10 @@ public class RssListPresenterImpl implements RssListPresenter {
     private RssRepository mRssRepository;
     private RssListView mRssListView;
     private BaseView mBaseView;
-    private OnListItemClickListener mOnListItemClickListener;
 
-    public RssListPresenterImpl(RssListView rssListView, BaseView baseView, OnListItemClickListener onListItemClickListener) {
+    public RssListPresenterImpl(RssListView rssListView, BaseView baseView) {
         this.mRssListView = rssListView;
         this.mBaseView = baseView;
-        this.mOnListItemClickListener = onListItemClickListener;
         this.mRssRepository = HabrahabrRssApplication.getInstance().getRepository();
         this.mDisposable = new CompositeDisposable();
     }

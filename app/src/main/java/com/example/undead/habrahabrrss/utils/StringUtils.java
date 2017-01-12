@@ -2,6 +2,7 @@ package com.example.undead.habrahabrrss.utils;
 
 import android.os.Build;
 import android.text.Html;
+import android.text.Spanned;
 
 public class StringUtils {
     public static String excludeHtmlImgs(String string) {
@@ -22,5 +23,13 @@ public class StringUtils {
 
     public static String excludeExtraSpaces(String string) {
         return string.replaceAll("\\s+", " ").trim();
+    }
+
+    public static Spanned htmlToSpanned(String string) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(string, Html.FROM_HTML_MODE_COMPACT);
+        } else {
+            return Html.fromHtml(string);
+        }
     }
 }

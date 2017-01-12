@@ -1,8 +1,6 @@
 package com.example.undead.habrahabrrss.adapter;
 
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.undead.habrahabrrss.R;
+import com.example.undead.habrahabrrss.fragment.RssListFragment;
 import com.example.undead.habrahabrrss.model.RssItem;
-import com.example.undead.habrahabrrss.presenter.RssListPresenterImpl;
 import com.example.undead.habrahabrrss.utils.StringUtils;
 
 import java.util.List;
@@ -22,10 +20,10 @@ import butterknife.ButterKnife;
 public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.ViewHolder> {
 
     private final List<RssItem> mRssItemList;
-    private final RssListPresenterImpl.OnListItemClickListener mOnListItemClickListener;
+    private final RssListFragment.OnListItemClickListener mOnListItemClickListener;
 
     public RssListAdapter(final List<RssItem> rssItemList,
-                          RssListPresenterImpl.OnListItemClickListener onListItemClickListener) {
+                          RssListFragment.OnListItemClickListener onListItemClickListener) {
         this.mRssItemList = rssItemList;
         this.mOnListItemClickListener = onListItemClickListener;
     }
@@ -65,11 +63,13 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.ViewHold
             ButterKnife.bind(this, view);
         }
 
-        void bindItem(final RssItem rssItem, final RssListPresenterImpl.OnListItemClickListener clickListener) {
+        void bindItem(final RssItem rssItem, final RssListFragment.OnListItemClickListener clickListener) {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    clickListener.onListItemClick(rssItem);
+                    if (clickListener != null) {
+                        clickListener.onListItemClick(rssItem);
+                    }
                 }
             });
             mTitleTextView.setText(rssItem.getTitle());

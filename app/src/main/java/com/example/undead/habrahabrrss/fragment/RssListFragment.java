@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.undead.habrahabrrss.MainActivity;
 import com.example.undead.habrahabrrss.R;
 import com.example.undead.habrahabrrss.adapter.RssListAdapter;
 import com.example.undead.habrahabrrss.model.RssItem;
@@ -26,7 +27,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RssListFragment extends BaseFragment
-        implements RssListView, RssListPresenterImpl.OnListItemClickListener {
+        implements RssListView {
+
+    public interface OnListItemClickListener {
+        void onListItemClick(RssItem item);
+    }
 
     public final static String TAG = RssListFragment.class.getSimpleName();
 
@@ -42,6 +47,8 @@ public class RssListFragment extends BaseFragment
     private RssListAdapter mAdapter;
     private RssListPresenter mRssListPresenter;
 
+    private OnListItemClickListener mOnListItemClickListener;
+
     @BindView(R.id.listView)
     RecyclerView mRecyclerView;
 
@@ -55,7 +62,7 @@ public class RssListFragment extends BaseFragment
     @Override
     public void setRssItemList(List<RssItem> rssItemList) {
         setSubtitleDueToMenuOption();
-        mRecyclerView.swapAdapter(new RssListAdapter(rssItemList, this), false);
+        mRecyclerView.swapAdapter(new RssListAdapter(rssItemList, mOnListItemClickListener), false);
     }
 
     @Override
@@ -63,7 +70,7 @@ public class RssListFragment extends BaseFragment
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         setHasOptionsMenu(true);
-        mRssListPresenter = new RssListPresenterImpl(this, this, this);
+        mRssListPresenter = new RssListPresenterImpl(this, this);
     }
 
     @Override
@@ -81,7 +88,8 @@ public class RssListFragment extends BaseFragment
             mCurrentOption = savedInstanceState.getInt(TAG_OPTION, 0);
         }
         mItems = new ArrayList<>();
-        mAdapter = new RssListAdapter(mItems, this);
+        mAdapter = new RssListAdapter(mItems, mOnListItemClickListener);
+        mOnListItemClickListener = ((MainActivity) getActivity());
 
         setSubtitleDueToMenuOption();
         showEmptyMessage();
@@ -132,11 +140,6 @@ public class RssListFragment extends BaseFragment
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onListItemClick(RssItem item) {
-
     }
 
     @Override
