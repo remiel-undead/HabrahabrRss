@@ -85,6 +85,7 @@ public class RssListFragment extends BaseFragment
         mAdapter = new RssListAdapter(mItems, this);
 
         setSubtitleDueToMenuOption();
+        showEmptyMessage();
         fetchDueToMenuOption();
     }
 

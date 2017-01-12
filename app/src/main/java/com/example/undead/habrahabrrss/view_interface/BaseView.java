@@ -5,4 +5,5 @@ public interface BaseView {
     void showProgress();
     void hideProgress();
     void showEmptyMessage();
+    void hideEmptyMessage();
 }

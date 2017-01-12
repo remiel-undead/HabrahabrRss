@@ -30,14 +30,12 @@ public class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void showProgress() {
-        mEmptyTextView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
         mProgressBar.setIndeterminate(true);
     }
 
     @Override
     public void hideProgress() {
-        mEmptyTextView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
         mProgressBar.setIndeterminate(false);
     }
@@ -45,6 +43,11 @@ public class BaseFragment extends Fragment implements BaseView {
     @Override
     public void showEmptyMessage() {
         mEmptyTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyMessage() {
+        mEmptyTextView.setVisibility(View.GONE);
     }
 
     @Override

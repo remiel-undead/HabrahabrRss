@@ -3,6 +3,7 @@ package com.example.undead.habrahabrrss.presenter;
 import com.example.undead.habrahabrrss.HabrahabrRssApplication;
 import com.example.undead.habrahabrrss.model.RssItem;
 import com.example.undead.habrahabrrss.repository.RssRepository;
+import com.example.undead.habrahabrrss.utils.ObjectUtils;
 import com.example.undead.habrahabrrss.view_interface.BaseView;
 import com.example.undead.habrahabrrss.view_interface.RssListView;
 
@@ -23,16 +24,24 @@ public class RssListPresenterImpl implements RssListPresenter {
     private class RssListDisposableObserver extends DisposableObserver<List<RssItem>> {
         @Override
         public void onNext(List<RssItem> rssItems) {
+            mBaseView.hideProgress();
+            if (ObjectUtils.isEmpty(rssItems)) {
+                mBaseView.showEmptyMessage();
+            } else {
+                mBaseView.hideEmptyMessage();
+            }
             mRssListView.setRssItemList(rssItems);
         }
 
         @Override
         public void onError(Throwable e) {
+            mBaseView.hideProgress();
             mBaseView.showErrorMessage(e.getMessage());
         }
 
         @Override
-        public void onComplete() { }
+        public void onComplete() {
+        }
     }
 
     private CompositeDisposable mDisposable;
@@ -51,6 +60,7 @@ public class RssListPresenterImpl implements RssListPresenter {
 
     @Override
     public void fetchTopDay() {
+        mBaseView.showProgress();
         mDisposable.add(mRssRepository
                 .getTopDay()
                 .subscribeOn(Schedulers.io())
@@ -60,6 +70,7 @@ public class RssListPresenterImpl implements RssListPresenter {
 
     @Override
     public void fetchTopWeek() {
+        mBaseView.showProgress();
         mDisposable.add(mRssRepository
                 .getTopWeek()
                 .subscribeOn(Schedulers.io())
@@ -69,6 +80,7 @@ public class RssListPresenterImpl implements RssListPresenter {
 
     @Override
     public void fetchTopMonth() {
+        mBaseView.showProgress();
         mDisposable.add(mRssRepository
                 .getTopMonth()
                 .subscribeOn(Schedulers.io())
@@ -78,6 +90,7 @@ public class RssListPresenterImpl implements RssListPresenter {
 
     @Override
     public void fetchTopAll() {
+        mBaseView.showProgress();
         mDisposable.add(mRssRepository
                 .getTopAll()
                 .subscribeOn(Schedulers.io())
