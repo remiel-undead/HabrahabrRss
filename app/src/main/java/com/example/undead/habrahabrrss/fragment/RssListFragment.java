@@ -104,6 +104,7 @@ public class RssListFragment extends BaseFragment
 
     private void setSubtitleDueToMenuOption() {
         ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(false);
         switch (mCurrentOption) {
             case OPTION_DAY:
                 supportActionBar.setSubtitle(R.string.top_per_day);
