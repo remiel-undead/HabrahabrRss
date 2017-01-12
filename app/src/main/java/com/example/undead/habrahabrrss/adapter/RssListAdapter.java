@@ -1,6 +1,8 @@
 package com.example.undead.habrahabrrss.adapter;
 
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.example.undead.habrahabrrss.R;
 import com.example.undead.habrahabrrss.model.RssItem;
 import com.example.undead.habrahabrrss.presenter.RssListPresenterImpl;
+import com.example.undead.habrahabrrss.utils.StringUtils;
 
 import java.util.List;
 
@@ -71,7 +74,7 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.ViewHold
             });
             mTitleTextView.setText(rssItem.getTitle());
             mDateTextView.setText(rssItem.getPublishedDate());
-            mDescriptionTextView.setText(rssItem.getDescription());
+            mDescriptionTextView.setText(StringUtils.excludeHtml(rssItem.getDescription()));
             // TODO set img
         }
     }
