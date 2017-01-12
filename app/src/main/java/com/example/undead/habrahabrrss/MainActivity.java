@@ -18,17 +18,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null) {
-            mCurrentFragmentTag = savedInstanceState.getString(mCurrentFragmentTag, RssListFragment.TAG);
-        } else {
-            mCurrentFragmentTag = RssListFragment.TAG;
-        }
         FragmentManager manager = getSupportFragmentManager();
-        mFragment = manager.findFragmentByTag(mCurrentFragmentTag);
-        if (mFragment == null) {
+        if (savedInstanceState == null) {
+            mCurrentFragmentTag = RssListFragment.TAG;
             mFragment = RssListFragment.newInstance();
+            manager.beginTransaction().replace(R.id.frame_container, mFragment, mCurrentFragmentTag).commit();
+        } else {
+            mCurrentFragmentTag = savedInstanceState.getString(mCurrentFragmentTag, RssListFragment.TAG);
+            mFragment = manager.findFragmentByTag(mCurrentFragmentTag);
+            if (mFragment == null) {
+                mFragment = RssListFragment.newInstance();
+                manager.beginTransaction().replace(R.id.frame_container, mFragment, mCurrentFragmentTag).commit();
+            }
         }
-        manager.beginTransaction().replace(R.id.frame_container, mFragment).commit();
     }
 
     @Override

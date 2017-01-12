@@ -30,7 +30,6 @@ public class RssListFragment extends BaseFragment
 
     public final static String TAG = RssListFragment.class.getSimpleName();
 
-
     private static final String TAG_OPTION = "option";
     private final static int OPTION_DAY = 0;
     private final static int OPTION_WEEK = 1;
@@ -87,6 +86,12 @@ public class RssListFragment extends BaseFragment
         setSubtitleDueToMenuOption();
         showEmptyMessage();
         fetchDueToMenuOption();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(TAG_OPTION, mCurrentOption);
     }
 
     private void setSubtitleDueToMenuOption() {
