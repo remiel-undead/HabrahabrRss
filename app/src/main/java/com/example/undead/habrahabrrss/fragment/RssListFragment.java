@@ -1,6 +1,8 @@
 package com.example.undead.habrahabrrss.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,6 +55,7 @@ public class RssListFragment extends BaseFragment
 
     @Override
     public void setRssItemList(List<RssItem> rssItemList) {
+        setSubtitleDueToMenuOption();
         mRecyclerView.swapAdapter(new RssListAdapter(rssItemList, this), false);
     }
 
@@ -81,7 +84,29 @@ public class RssListFragment extends BaseFragment
         mItems = new ArrayList<>();
         mAdapter = new RssListAdapter(mItems, this);
 
+        setSubtitleDueToMenuOption();
         fetchDueToMenuOption();
+    }
+
+    private void setSubtitleDueToMenuOption() {
+        ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        switch (mCurrentOption) {
+            case OPTION_DAY:
+                supportActionBar.setSubtitle(R.string.top_per_day);
+                break;
+            case OPTION_WEEK:
+                supportActionBar.setSubtitle(R.string.top_per_week);
+                break;
+            case OPTION_MONTH:
+                supportActionBar.setSubtitle(R.string.top_per_month);
+                break;
+            case OPTION_ALL:
+                supportActionBar.setSubtitle(R.string.top_all);
+                break;
+            default:
+                supportActionBar.setSubtitle(R.string.top_per_day);
+                break;
+        }
     }
 
     private void fetchDueToMenuOption() {
