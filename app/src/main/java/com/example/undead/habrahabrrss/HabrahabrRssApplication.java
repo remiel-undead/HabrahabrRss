@@ -4,8 +4,11 @@ import android.app.Application;
 
 import com.example.undead.habrahabrrss.repository.RssRepository;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class HabrahabrRssApplication extends Application {
-    private RssRepository mRssRepository = new RssRepository();
+    private RssRepository mRssRepository;
 
     private static HabrahabrRssApplication sInstance;
 
@@ -17,6 +20,13 @@ public class HabrahabrRssApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        mRssRepository = new RssRepository();
     }
 
     public RssRepository getRepository() {

@@ -5,6 +5,14 @@ import org.simpleframework.xml.Root;
 
 @Root(strict = false, name = "item")
 public class RssItem {
+    public RssItem() {}
+
+    public RssItem(String title, String description, String link, String pubDate) {
+        this.title = title;
+        this.description = description;
+        this.link = link;
+        this.pubDate = pubDate;
+    }
 
     @Element
     private String title;

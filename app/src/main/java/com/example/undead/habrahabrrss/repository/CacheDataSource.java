@@ -5,8 +5,15 @@ import com.example.undead.habrahabrrss.model.RssItem;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.realm.Realm;
 
 public class CacheDataSource implements DataSource, WritableDataStorage {
+    private Realm mRealm;
+
+    public CacheDataSource() {
+        mRealm = Realm.getDefaultInstance();
+    }
+
     @Override
     public Observable<List<RssItem>> getTopDay() {
         return null;
