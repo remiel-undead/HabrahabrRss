@@ -68,14 +68,9 @@ public class MainActivity extends AppCompatActivity implements RssListFragment.O
             FragmentManager manager = getSupportFragmentManager();
             mFragment = manager.findFragmentByTag(RssItemFragment.TAG);
             if (mFragment == null) {
-                mFragment = RssItemFragment.newInstance();
+                mFragment = RssItemFragment.newInstance(item.getTitle(), item.getPublishedDate(), item.getDescription());
             }
             mCurrentFragmentTag = RssItemFragment.TAG;
-            Bundle args = new Bundle();
-            args.putString(RSS_ITEM_TITLE_ARG, item.getTitle());
-            args.putString(RSS_ITEM_DATE_ARG, item.getPublishedDate());
-            args.putString(RSS_ITEM_DESCR_ARG, item.getDescription());
-            mFragment.setArguments(args);
             manager.beginTransaction()
                     .replace(R.id.frame_container, mFragment, mCurrentFragmentTag)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

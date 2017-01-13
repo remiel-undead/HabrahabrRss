@@ -33,8 +33,14 @@ public class RssItemFragment extends BaseFragment {
     public RssItemFragment() {
     }
 
-    public static RssItemFragment newInstance() {
-        return new RssItemFragment();
+    public static RssItemFragment newInstance(String title, String date, String description) {
+        RssItemFragment fragment = new RssItemFragment();
+        Bundle args = new Bundle();
+        args.putString(MainActivity.RSS_ITEM_TITLE_ARG, title);
+        args.putString(MainActivity.RSS_ITEM_DATE_ARG, date);
+        args.putString(MainActivity.RSS_ITEM_DESCR_ARG, description);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
