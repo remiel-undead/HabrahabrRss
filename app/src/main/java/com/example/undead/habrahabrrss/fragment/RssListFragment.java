@@ -12,12 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.undead.habrahabrrss.HabrahabrRssApplication;
 import com.example.undead.habrahabrrss.MainActivity;
 import com.example.undead.habrahabrrss.R;
 import com.example.undead.habrahabrrss.adapter.RssListAdapter;
 import com.example.undead.habrahabrrss.model.RssItem;
 import com.example.undead.habrahabrrss.presenter.RssListPresenter;
 import com.example.undead.habrahabrrss.presenter.RssListPresenterImpl;
+import com.example.undead.habrahabrrss.utils.MappingUtils;
 import com.example.undead.habrahabrrss.view_interface.RssListView;
 
 import java.util.ArrayList;
@@ -36,10 +38,6 @@ public class RssListFragment extends BaseFragment
     public final static String TAG = RssListFragment.class.getSimpleName();
 
     private static final String TAG_OPTION = "option";
-    private final static int OPTION_DAY = 0;
-    private final static int OPTION_WEEK = 1;
-    private final static int OPTION_MONTH = 2;
-    private final static int OPTION_ALL = 3;
 
     private int mCurrentOption;
 
@@ -71,19 +69,20 @@ public class RssListFragment extends BaseFragment
         setRetainInstance(true);
         setHasOptionsMenu(true);
         mRssListPresenter = new RssListPresenterImpl(this, this);
+        HabrahabrRssApplication.getInstance().getRepository().updateCache();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mRssListPresenter.unsubscribe();
+        HabrahabrRssApplication.getInstance().getRepository().unsubscribe();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState == null) {
-            mCurrentOption = OPTION_DAY;
+            mCurrentOption = MappingUtils.OPTION_DAY;
         } else {
             mCurrentOption = savedInstanceState.getInt(TAG_OPTION, 0);
         }
@@ -106,16 +105,16 @@ public class RssListFragment extends BaseFragment
         ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         supportActionBar.setDisplayHomeAsUpEnabled(false);
         switch (mCurrentOption) {
-            case OPTION_DAY:
+            case MappingUtils.OPTION_DAY:
                 supportActionBar.setSubtitle(R.string.top_per_day);
                 break;
-            case OPTION_WEEK:
+            case MappingUtils.OPTION_WEEK:
                 supportActionBar.setSubtitle(R.string.top_per_week);
                 break;
-            case OPTION_MONTH:
+            case MappingUtils.OPTION_MONTH:
                 supportActionBar.setSubtitle(R.string.top_per_month);
                 break;
-            case OPTION_ALL:
+            case MappingUtils.OPTION_ALL:
                 supportActionBar.setSubtitle(R.string.top_all);
                 break;
             default:
@@ -126,16 +125,16 @@ public class RssListFragment extends BaseFragment
 
     private void fetchDueToMenuOption() {
         switch (mCurrentOption) {
-            case OPTION_DAY:
+            case MappingUtils.OPTION_DAY:
                 mRssListPresenter.fetchTopDay();
                 break;
-            case OPTION_WEEK:
+            case MappingUtils.OPTION_WEEK:
                 mRssListPresenter.fetchTopWeek();
                 break;
-            case OPTION_MONTH:
+            case MappingUtils.OPTION_MONTH:
                 mRssListPresenter.fetchTopMonth();
                 break;
-            case OPTION_ALL:
+            case MappingUtils.OPTION_ALL:
                 mRssListPresenter.fetchTopAll();
                 break;
             default:
@@ -166,19 +165,19 @@ public class RssListFragment extends BaseFragment
         boolean result = false;
         switch (item.getItemId()) {
             case R.id.top_per_day:
-                mCurrentOption = OPTION_DAY;
+                mCurrentOption = MappingUtils.OPTION_DAY;
                 result = true;
                 break;
             case R.id.top_per_week:
-                mCurrentOption = OPTION_WEEK;
+                mCurrentOption = MappingUtils.OPTION_WEEK;
                 result = true;
                 break;
             case R.id.top_per_month:
-                mCurrentOption = OPTION_MONTH;
+                mCurrentOption = MappingUtils.OPTION_MONTH;
                 result = true;
                 break;
             case R.id.top_all:
-                mCurrentOption = OPTION_ALL;
+                mCurrentOption = MappingUtils.OPTION_ALL;
                 result = true;
                 break;
             default:

@@ -10,9 +10,12 @@ public class RealmRssItem extends RealmObject {
     @PrimaryKey
     private String pubDate;
 
+    private int feedType;
+
     public RealmRssItem() { }
 
-    public RealmRssItem(RssItem rssItem) {
+    public RealmRssItem(RssItem rssItem, int feedType) {
+        this.feedType = feedType;
         this.title = rssItem.getTitle();
         this.description = rssItem.getDescription();
         this.link = rssItem.getLink();
@@ -33,5 +36,9 @@ public class RealmRssItem extends RealmObject {
 
     public String getPublishedDate() {
         return pubDate;
+    }
+
+    public int getFeedType() {
+        return feedType;
     }
 }

@@ -5,5 +5,4 @@ public interface RssListPresenter {
     void fetchTopWeek();
     void fetchTopMonth();
     void fetchTopAll();
-    void unsubscribe();
 }
