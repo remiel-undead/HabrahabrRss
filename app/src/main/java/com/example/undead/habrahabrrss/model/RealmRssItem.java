@@ -1,15 +1,12 @@
 package com.example.undead.habrahabrrss.model;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 public class RealmRssItem extends RealmObject {
     private String title;
     private String description;
     private String link;
-    @PrimaryKey
     private String pubDate;
-
     private int feedType;
 
     public RealmRssItem() { }

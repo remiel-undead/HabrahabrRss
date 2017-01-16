@@ -1,4 +1,4 @@
-package com.example.undead.habrahabrrss;
+package com.example.undead.habrahabrrss.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.undead.habrahabrrss.R;
 import com.example.undead.habrahabrrss.fragment.RssItemFragment;
 import com.example.undead.habrahabrrss.fragment.RssListFragment;
 import com.example.undead.habrahabrrss.model.RssItem;

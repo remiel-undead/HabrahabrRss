@@ -1,30 +1,25 @@
 package com.example.undead.habrahabrrss.repository;
 
-import com.example.undead.habrahabrrss.Unsubscribable;
 import com.example.undead.habrahabrrss.model.RssItem;
 import com.example.undead.habrahabrrss.utils.ObjectUtils;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function4;
 
 public class RssRepository implements
         DataSource,
         WritableDataStorage,
-        UpdatableDataStorage,
-        Unsubscribable {
+        UpdatableDataStorage {
     private CloudDataSource mCloudDataSource;
     private CacheDataSource mCacheDataSource;
-    private CompositeDisposable mUpdateCompositeDisposable;
 
     public RssRepository() {
         mCacheDataSource = new CacheDataSource();
         mCloudDataSource = new CloudDataSource();
-        mUpdateCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -67,87 +62,34 @@ public class RssRepository implements
         mCacheDataSource.setTopAll(rssItemList);
     }
 
-    public void updateCache() {
-       // update top day
-        mUpdateCompositeDisposable.add(mCloudDataSource
-                .getTopDay()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<RssItem>>() {
-                    @Override
-                    public void onNext(List<RssItem> rssItems) {
-                        if (!ObjectUtils.isEmpty(rssItems)) {
-                            mCacheDataSource.setTopDay(rssItems);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) { }
-
-                    @Override
-                    public void onComplete() { }
-                }));
-        // update top week
-        mUpdateCompositeDisposable.add(mCloudDataSource
-                .getTopWeek()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<RssItem>>() {
-                    @Override
-                    public void onNext(List<RssItem> rssItems) {
-                        if (!ObjectUtils.isEmpty(rssItems)) {
-                            mCacheDataSource.setTopWeek(rssItems);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) { }
-
-                    @Override
-                    public void onComplete() { }
-                }));
-        // update top month
-        mUpdateCompositeDisposable.add(mCloudDataSource
-                .getTopMonth()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<RssItem>>() {
-                    @Override
-                    public void onNext(List<RssItem> rssItems) {
-                        if (!ObjectUtils.isEmpty(rssItems)) {
-                            mCacheDataSource.setTopMonth(rssItems);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) { }
-
-                    @Override
-                    public void onComplete() { }
-                }));
-        // update top all
-        mUpdateCompositeDisposable.add(mCloudDataSource
-                .getTopAll()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<RssItem>>() {
-                    @Override
-                    public void onNext(List<RssItem> rssItems) {
-                        if (!ObjectUtils.isEmpty(rssItems)) {
-                            mCacheDataSource.setTopAll(rssItems);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) { }
-
-                    @Override
-                    public void onComplete() { }
-                }));
-    }
-
-    @Override
-    public void unsubscribe() {
-        mUpdateCompositeDisposable.clear();
+    public Observable<Void> updateCache() {
+        return Observable.defer(new Callable<ObservableSource<? extends Void>>() {
+            @Override
+            public ObservableSource<? extends Void> call() throws Exception {
+                Observable<List<RssItem>> topDay = mCloudDataSource.getTopDay();
+                Observable<List<RssItem>> topWeek = mCloudDataSource.getTopWeek();
+                Observable<List<RssItem>> topMonth = mCloudDataSource.getTopMonth();
+                Observable<List<RssItem>> topAll = mCloudDataSource.getTopAll();
+                return Observable.zip(topDay, topWeek, topMonth, topAll,
+                        new Function4<List<RssItem>, List<RssItem>, List<RssItem>, List<RssItem>, Void>() {
+                            @Override
+                            public Void apply(List<RssItem> topDay1, List<RssItem> topWeek1, List<RssItem> topMonth1, List<RssItem> topAll1) throws Exception {
+                                if (!ObjectUtils.isEmpty(topDay1)) {
+                                    mCacheDataSource.setTopDay(topDay1);
+                                }
+                                if (!ObjectUtils.isEmpty(topWeek1)) {
+                                    mCacheDataSource.setTopWeek(topWeek1);
+                                }
+                                if (!ObjectUtils.isEmpty(topMonth1)) {
+                                    mCacheDataSource.setTopMonth(topMonth1);
+                                }
+                                if (!ObjectUtils.isEmpty(topAll1)) {
+                                    mCacheDataSource.setTopAll(topAll1);
+                                }
+                                return null;
+                            }
+                        });
+            }
+        });
     }
 }

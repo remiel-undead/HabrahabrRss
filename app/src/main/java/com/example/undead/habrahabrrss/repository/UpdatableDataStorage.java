@@ -1,5 +1,7 @@
 package com.example.undead.habrahabrrss.repository;
 
+import io.reactivex.Observable;
+
 public interface UpdatableDataStorage {
-    void updateCache();
+    Observable<Void> updateCache();
 }

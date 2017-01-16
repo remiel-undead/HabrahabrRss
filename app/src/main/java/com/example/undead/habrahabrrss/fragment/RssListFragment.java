@@ -12,8 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.undead.habrahabrrss.HabrahabrRssApplication;
-import com.example.undead.habrahabrrss.MainActivity;
+import com.example.undead.habrahabrrss.activity.MainActivity;
 import com.example.undead.habrahabrrss.R;
 import com.example.undead.habrahabrrss.adapter.RssListAdapter;
 import com.example.undead.habrahabrrss.model.RssItem;
@@ -69,13 +68,6 @@ public class RssListFragment extends BaseFragment
         setRetainInstance(true);
         setHasOptionsMenu(true);
         mRssListPresenter = new RssListPresenterImpl(this, this);
-        HabrahabrRssApplication.getInstance().getRepository().updateCache();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        HabrahabrRssApplication.getInstance().getRepository().unsubscribe();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.undead.habrahabrrss.fragment;
 
-import com.example.undead.habrahabrrss.MainActivity;
+import com.example.undead.habrahabrrss.activity.MainActivity;
 import com.example.undead.habrahabrrss.R;
 import com.example.undead.habrahabrrss.utils.StringUtils;
 

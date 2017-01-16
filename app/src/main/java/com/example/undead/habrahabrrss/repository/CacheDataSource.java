@@ -7,8 +7,10 @@ import com.example.undead.habrahabrrss.utils.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -19,76 +21,96 @@ public class CacheDataSource implements DataSource, WritableDataStorage {
 
     @Override
     public Observable<List<RssItem>> getTopDay() {
-        Realm realm = Realm.getDefaultInstance();
-        List<RssItem> rssItemList = new ArrayList<>();
-        RealmResults<RealmRssItem> realmRssItemListResults = realm
-                .where(RealmRssItem.class)
-                .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_DAY)
-                .findAll();
-        if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
-            for (RealmRssItem realmRssItem : realmRssItemListResults) {
-                rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+        return Observable.defer(new Callable<ObservableSource<? extends List<RssItem>>>() {
+            @Override
+            public ObservableSource<? extends List<RssItem>> call() throws Exception {
+                Realm realm = Realm.getDefaultInstance();
+                List<RssItem> rssItemList = new ArrayList<>();
+                RealmResults<RealmRssItem> realmRssItemListResults = realm
+                        .where(RealmRssItem.class)
+                        .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_DAY)
+                        .findAll();
+                if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
+                    for (RealmRssItem realmRssItem : realmRssItemListResults) {
+                        rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+                    }
+                }
+                realm.close();
+                return Observable.just(rssItemList);
             }
-        }
-        realm.close();
-        return Observable.just(rssItemList);
+        });
     }
 
     @Override
     public Observable<List<RssItem>> getTopWeek() {
-        Realm realm = Realm.getDefaultInstance();
-        List<RssItem> rssItemList = new ArrayList<>();
-        RealmResults<RealmRssItem> realmRssItemListResults = realm
-                .where(RealmRssItem.class)
-                .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_WEEK)
-                .findAll();
-        if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
-            for (RealmRssItem realmRssItem : realmRssItemListResults) {
-                rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+        return Observable.defer(new Callable<ObservableSource<? extends List<RssItem>>>() {
+            @Override
+            public ObservableSource<? extends List<RssItem>> call() throws Exception {
+                Realm realm = Realm.getDefaultInstance();
+                List<RssItem> rssItemList = new ArrayList<>();
+                RealmResults<RealmRssItem> realmRssItemListResults = realm
+                        .where(RealmRssItem.class)
+                        .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_WEEK)
+                        .findAll();
+                if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
+                    for (RealmRssItem realmRssItem : realmRssItemListResults) {
+                        rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+                    }
+                }
+                realm.close();
+                return Observable.just(rssItemList);
             }
-        }
-        realm.close();
-        return Observable.just(rssItemList);
+        });
     }
 
     @Override
     public Observable<List<RssItem>> getTopMonth() {
-        Realm realm = Realm.getDefaultInstance();
-        List<RssItem> rssItemList = new ArrayList<>();
-        RealmResults<RealmRssItem> realmRssItemListResults = realm
-                .where(RealmRssItem.class)
-                .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_MONTH)
-                .findAll();
-        if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
-            for (RealmRssItem realmRssItem : realmRssItemListResults) {
-                rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+        return Observable.defer(new Callable<ObservableSource<? extends List<RssItem>>>() {
+            @Override
+            public ObservableSource<? extends List<RssItem>> call() throws Exception {
+                Realm realm = Realm.getDefaultInstance();
+                List<RssItem> rssItemList = new ArrayList<>();
+                RealmResults<RealmRssItem> realmRssItemListResults = realm
+                        .where(RealmRssItem.class)
+                        .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_MONTH)
+                        .findAll();
+                if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
+                    for (RealmRssItem realmRssItem : realmRssItemListResults) {
+                        rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+                    }
+                }
+                realm.close();
+                return Observable.just(rssItemList);
             }
-        }
-        realm.close();
-        return Observable.just(rssItemList);
+        });
     }
 
     @Override
     public Observable<List<RssItem>> getTopAll() {
-        Realm realm = Realm.getDefaultInstance();
-        List<RssItem> rssItemList = new ArrayList<>();
-        RealmResults<RealmRssItem> realmRssItemListResults = realm
-                .where(RealmRssItem.class)
-                .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_ALL)
-                .findAll();
-        if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
-            for (RealmRssItem realmRssItem : realmRssItemListResults) {
-                rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+        return Observable.defer(new Callable<ObservableSource<? extends List<RssItem>>>() {
+            @Override
+            public ObservableSource<? extends List<RssItem>> call() throws Exception {
+                Realm realm = Realm.getDefaultInstance();
+                List<RssItem> rssItemList = new ArrayList<>();
+                RealmResults<RealmRssItem> realmRssItemListResults = realm
+                        .where(RealmRssItem.class)
+                        .equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_ALL)
+                        .findAll();
+                if (!ObjectUtils.isEmpty(realmRssItemListResults)) {
+                    for (RealmRssItem realmRssItem : realmRssItemListResults) {
+                        rssItemList.add(MappingUtils.convertRealmToRssItem(realmRssItem));
+                    }
+                }
+                realm.close();
+                return Observable.just(rssItemList);
             }
-        }
-        realm.close();
-        return Observable.just(rssItemList);
+        });
     }
 
     @Override
     public void setTopDay(final List<RssItem> rssItemList) {
-        final Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
                 bgRealm.where(RealmRssItem.class).equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_DAY).findAll().deleteAllFromRealm();
@@ -96,23 +118,14 @@ public class CacheDataSource implements DataSource, WritableDataStorage {
                     bgRealm.copyToRealm(new RealmRssItem(rssItem, MappingUtils.OPTION_DAY));
                 }
             }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                realm.close();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                realm.close();
-            }
         });
+        realm.close();
     }
 
     @Override
     public void setTopWeek(final List<RssItem> rssItemList) {
-        final Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
                 bgRealm.where(RealmRssItem.class).equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_WEEK).findAll().deleteAllFromRealm();
@@ -120,23 +133,14 @@ public class CacheDataSource implements DataSource, WritableDataStorage {
                     bgRealm.copyToRealm(new RealmRssItem(rssItem, MappingUtils.OPTION_WEEK));
                 }
             }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                realm.close();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                realm.close();
-            }
         });
+        realm.close();
     }
 
     @Override
     public void setTopMonth(final List<RssItem> rssItemList) {
-        final Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
                 bgRealm.where(RealmRssItem.class).equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_MONTH).findAll().deleteAllFromRealm();
@@ -144,23 +148,14 @@ public class CacheDataSource implements DataSource, WritableDataStorage {
                     bgRealm.copyToRealm(new RealmRssItem(rssItem, MappingUtils.OPTION_MONTH));
                 }
             }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                realm.close();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                realm.close();
-            }
         });
+        realm.close();
     }
 
     @Override
     public void setTopAll(final List<RssItem> rssItemList) {
-        final Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
                 bgRealm.where(RealmRssItem.class).equalTo(FIELD_FEED_TYPE, MappingUtils.OPTION_ALL).findAll().deleteAllFromRealm();
@@ -168,16 +163,7 @@ public class CacheDataSource implements DataSource, WritableDataStorage {
                     bgRealm.copyToRealm(new RealmRssItem(rssItem, MappingUtils.OPTION_ALL));
                 }
             }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                realm.close();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                realm.close();
-            }
         });
+        realm.close();
     }
 }
