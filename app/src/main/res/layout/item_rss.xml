@@ -19,7 +19,7 @@
                 android:id="@+id/item_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/habr_icon_small"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="16dp"/>
